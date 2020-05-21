@@ -1,0 +1,119 @@
+# demo
+
+```r
+library(tidyverse)
+library(magrittr)
+library(SmartEDA)
+library(ISLR)
+library(formattable)
+library(knitr)
+library(DT)
+```
+
+```r include=FALSE
+df<-read_csv("data/lendingclub/loan.csv")
+
+```
+```r
+#df$loan_status %>% table()
+df1 <- df %>%
+  filter(!loan_status %in% c("Issued", "In Grace Period")) %>%
+  mutate(target = ifelse(
+    loan_status %in% c(
+      "Fully Paid",
+      "Current",
+      "Does not meet the credit policy. Status:Fully Paid"
+    ),
+    '0',
+    '1'
+  )) %>% select(-loan_status)
+
+```
+
+```r
+# 总体展示全部的数据
+ExpData(data = df1, type = 1) %>% kable()
+```
+
+
+```r
+# 查看全部的变量类型，缺失值，重复值
+ExpData(data = df1, type = 2) %>% kable()
+```
+
+```r
+# 查看所有的连续性变量信息
+ExpNumStat(
+    df1,
+    by = "A",
+    gp = NULL,
+    Qnt = seq(0, 1, 0.1),
+    MesofShape = 2,
+    Outlier = TRUE,
+    round = 2
+) %>%
+    mutate_at(vars(Per_of_Missing), percent) %>% kable()
+```
+```r
+ExpNumStat(
+    df1,
+    by = "GA",
+    gp = "target",
+    Qnt = seq(0, 1, 0.1),
+    MesofShape = 2,
+    Outlier = TRUE,
+    round = 2
+) %>% mutate_at(vars(Per_of_Missing), percent) %>% kable()
+```
+
+```r
+# 查看数值变量的分布特征
+ExpNumViz(
+  df1,
+  target = "target",
+  type = 1,
+  nlim = 5,
+  Page=c(4,3)
+)
+```
+
+```r
+# 查看分类变量
+ExpCTable(df) %>% kable()
+```
+
+```r
+ExpCTable(
+    df1,
+    Target = "target"
+) %>% kable()
+```
+
+```r
+
+# 查看分类变量的分布
+ExpCatViz(
+    df1,
+    target = "target",
+    fname = NULL,
+    clim = 10,
+    margin = 2,
+    Page = c(5, 4),
+    sample = NULL
+)
+```
+```r
+df %>% distinct(target)
+```
+```r
+ExpCatStat(
+    df1,
+    Target = "loan_status_new",
+    result = "IV",
+    clim = 10,
+    nlim = 10,
+    Pclass = "1",
+    plot = TRUE
+) %>% data.frame() %>% write_csv("data/re.csv")
+```
+

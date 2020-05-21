@@ -1,0 +1,47 @@
+---
+title: "Untitled"
+author: "wenxin Gao"
+date: "2020/3/25"
+output: html_document
+---
+```{r include=FALSE}
+library(plyr)
+library(tidyverse)
+library(magrittr)
+library(SmartEDA)
+library(ISLR)
+library(formattable)
+library(knitr)
+library(DT)
+library(vroom)
+```
+```{r include=FALSE}
+df<-vroom::vroom("D:/JupyterNotebook/EDA-lendingclub/input/loan.csv")
+```
+
+```{r}
+df$last_pymnt_d %>% unique()
+```
+
+```{r}
+df1 <- df %>% 
+  filter(!loan_status %in% c("Issued","In Grace Period")) %>%
+  mutate(loan_status_new = ifelse(loan_status %in% c("Fully Paid","Current","Does not meet the credit policy. Status:Fully Paid"), '0', '1'))
+
+```
+
+```{r}
+ExpCatStat(
+    df1,
+    Target = "loan_status",
+    result = "IV",
+    clim = 10,
+    nlim = 10,
+    Pclass = "1",
+    plot = TRUE
+) %>% data.frame() %>% write_csv("data/iv.csv")
+```
+
+
+
+
