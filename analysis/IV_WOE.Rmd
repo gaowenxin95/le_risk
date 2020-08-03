@@ -16,10 +16,10 @@ library(DT)
 library(vroom)
 ```
 ```{r include=FALSE}
-df<-vroom::vroom("D:/JupyterNotebook/EDA-lendingclub/input/loan.csv")
+df<-vroom::vroom("D:/JupyterNotebook/EDA-lendingclub/input/df_sample1.csv")
 ```
 
-```{r}
+```{r include=FALSE}
 df$last_pymnt_d %>% unique()
 ```
 
@@ -30,7 +30,7 @@ df1 <- df %>%
 
 ```
 
-```{r}
+```{r include=FALSE}
 ExpCatStat(
     df1,
     Target = "loan_status",

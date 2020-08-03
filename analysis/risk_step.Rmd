@@ -1,30 +1,15 @@
----
-title: "risk_step"
-author: "wenxin Gao"
-date: "2020/5/21"
-output: html_document
----
+# 信用风险
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+*信用风险*：指借款人的还款能力和还款意愿在贷款后出现问题的风险。通常是由于不可抗力因素使用户的经济能力和思想状态发生改变导致的。
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## 工业界建模流程
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+在工业界建立一个机器学习模型的
+完整流程：
+- 1）将业务抽象为分类或回归问题。
+- 2）定义标签。
+- 3）选取合适的样本，并匹配出全部的信息作为基础特征。
+- 4）特征工程+模型训练+模型评价+模型调优(相互之间可能会有交互)。
+- 5）输出模型报告。
+- 6）上线与监控。
